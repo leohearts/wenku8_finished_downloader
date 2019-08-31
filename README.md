@@ -5,4 +5,4 @@
 
     依赖:curl,wget
 
-## 适用于Linux
+## 适用于Linux或WSL
