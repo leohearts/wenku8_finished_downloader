@@ -12,9 +12,9 @@ bool unavailable(char a){
 	for (int i=0;i<9;i++) if (a==una[i]) return 1;
 	return 0;
 }
-void downloadbook(string booknum){
-	string cmd="wget -t 0 \"http://dl.wenku8.com/down.php?type=utf8&id="+booknum+"\" -O "+booknum+".txt";
-	system(cmd.data());
+int downloadbook(string booknum){
+	string cmd="wget -t 16 \"http://dl.wenku8.com/down.php?type=utf8&id="+booknum+"\" -O "+booknum+".txt";
+	return system(cmd.data());
 }
 void renamefile(string booknum){
 	string filename=booknum+".txt";
@@ -46,6 +46,8 @@ void write_lib(string newbook){
 }
 int main(){
 	//renamefile("2333");
+	ofstream logerr ("wenku8_downlaoder.log");
+	int errcount=0;
 	read_lib();
 	string content;
 	int page=1;
@@ -75,7 +77,11 @@ int main(){
 			for (int i=find1-4;i<find1;i++) if (content[i]>47&&content[i]<58) booknum+=content[i];
 			find1=content.find(".htm\" target=\"_blank\"",find1+20);
 			if (lib[atoi(booknum.data())]) continue;
-			downloadbook(booknum);
+			if (downloadbook(booknum)){
+				logerr<<"下载失败:"<<booknum<<endl;
+				errcount++;
+				continue;
+			}
 			//downloaded.push_back(booknum);
 			renamefile(booknum);
 			write_lib(booknum);
@@ -85,5 +91,6 @@ int main(){
 		page++;
 		content="";
 	}
+	cout<<"出现"<<errcount<<"个错误。请查看wenku8_downlaoder.log"<<endl;
 	return 0;
 }
