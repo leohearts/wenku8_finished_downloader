@@ -91,6 +91,7 @@ int main(){
 		page++;
 		content="";
 	}
-	cout<<"出现"<<errcount<<"个错误。请查看wenku8_downlaoder.log"<<endl;
+	if (errcount) cout<<"出现"<<errcount<<"个错误。请查看wenku8_downlaoder.log并尝试手动下载。"<<endl;
+	else cout<<"下载完毕。未出现错误。"<<endl;
 	return 0;
 }
