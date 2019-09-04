@@ -63,7 +63,7 @@ int main(){
 		cout<<cmd<<endl;
 		system(cmd.data());
 		FILE* cache=fopen(".cache","r");
-		char tmp1=getc(cache);
+		int tmp1=getc(cache);
 		while (tmp1!=-1){
 			content+=tmp1;
 			tmp1=getc(cache);
